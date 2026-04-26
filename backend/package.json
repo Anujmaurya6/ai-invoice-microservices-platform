@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Microservices Backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd api-gateway && npm run dev\" \"cd user-service && npm run dev\" \"cd invoice-service && npm run dev\" \"cd subscription-service && npm run dev\" \"cd payment-service && npm run dev\" \"cd ai-service && npm run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
