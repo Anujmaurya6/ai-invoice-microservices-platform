@@ -1,11 +1,11 @@
 const router = require("express").Router();
 const Razorpay = require("razorpay");
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY,
-  key_secret: process.env.RAZORPAY_SECRET
-});
 
+const razorpay = new Razorpay({
+  key_id: "rzp_test_123",      // dummy डाल अभी
+  key_secret: "test_secret"
+});
 router.post("/create-order", async (req, res) => {
   const options = {
     amount: 50000,

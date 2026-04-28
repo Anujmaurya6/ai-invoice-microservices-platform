@@ -5,35 +5,39 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
-// 🔁 ROUTING (Gateway → Services)
-
+// USER
 app.use("/api/users", createProxyMiddleware({
-  target: process.env.USER,
+  target: "http://user-service:5001",
   changeOrigin: true
 }));
 
+// INVOICE
 app.use("/api/invoices", createProxyMiddleware({
-  target: process.env.INVOICE,
+  target: "http://invoice-service:5002",
   changeOrigin: true
 }));
 
+// SUBSCRIPTION
 app.use("/api/subscription", createProxyMiddleware({
-  target: process.env.SUB,
+  target: "http://subscription-service:5003",
   changeOrigin: true
 }));
 
+// PAYMENT
 app.use("/api/payment", createProxyMiddleware({
-  target: process.env.PAYMENT,
+  target: "http://payment-service:5004",
   changeOrigin: true
 }));
 
+// AI
 app.use("/api/ai", createProxyMiddleware({
-  target: process.env.AI,
+  target: "http://ai-service:5005",
   changeOrigin: true
 }));
 
-// 🚀 START SERVER
-app.listen(process.env.PORT, () => {
-  console.log(`🌐 API Gateway running on port ${process.env.PORT}`);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🌐 API Gateway running on ${PORT}`);
 });

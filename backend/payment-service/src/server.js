@@ -6,9 +6,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔗 Routes
+// Routes
 app.use("/api/payment", require("./routes/paymentRoutes"));
 
-app.listen(process.env.PORT, () => {
-  console.log(`🟠 Payment Service running on ${process.env.PORT}`);
+const PORT = process.env.PORT || 5004;
+app.listen(PORT, () => {
+  console.log(`🟠 Payment Service running on ${PORT}`);
 });

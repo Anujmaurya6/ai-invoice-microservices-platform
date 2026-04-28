@@ -7,15 +7,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔗 Routes
+// Routes
 app.use("/api/invoices", require("./routes/invoiceRoutes"));
 
-// 🗄️ DB Connect
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("🟡 Invoice DB Connected"))
-  .catch(err => console.log("❌ DB Error:", err));
+// DB
+const MONGO_URI =
+  process.env.MONGO_URI || "mongodb://mongodb:27017/invoiceDB";
 
-// 🚀 Start
-app.listen(process.env.PORT, () => {
-  console.log(`🧾 Invoice Service running on ${process.env.PORT}`);
+mongoose.connect(MONGO_URI)
+  .then(() => console.log("🟡 Invoice DB Connected"))
+  .catch(err => {
+    console.log("❌ DB Error:", err.message);
+    process.exit(1);
+  });
+
+const PORT = process.env.PORT || 5002;
+app.listen(PORT, () => {
+  console.log(`🧾 Invoice Service running on ${PORT}`);
 });
