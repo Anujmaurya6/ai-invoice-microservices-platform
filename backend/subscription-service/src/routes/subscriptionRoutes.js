@@ -4,10 +4,10 @@ const {
   upgradeSubscription
 } = require("../controllers/subController");
 
-// 🔍 check pro or not
+// 🔍 check
 router.get("/check", checkSubscription);
 
-// 💳 upgrade to pro
+// 💳 upgrade
 router.post("/upgrade", upgradeSubscription);
 
 module.exports = router;

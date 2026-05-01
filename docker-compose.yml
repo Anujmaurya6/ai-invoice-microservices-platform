@@ -1,59 +1,56 @@
 services:
 
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    restart: always
-
   api-gateway:
     build: ./backend/api-gateway
     ports:
       - "5000:5000"
+    environment:
+      - USER=http://user-service:5001
+      - INVOICE=http://invoice-service:5002
+      - SUB=http://subscription-service:5003
+      - PAYMENT=http://payment-service:5006
+      - AI=http://ai-service:5005
     depends_on:
       - user-service
       - invoice-service
       - subscription-service
       - payment-service
       - ai-service
-    restart: always
 
   user-service:
     build: ./backend/user-service
     ports:
       - "5001:5001"
-    depends_on:
-      - mongodb
-    restart: always
+    env_file:
+      - ./backend/user-service/.env
 
   invoice-service:
     build: ./backend/invoice-service
     ports:
       - "5002:5002"
-    depends_on:
-      - mongodb
-    restart: always
+    env_file:
+      - ./backend/invoice-service/.env
 
   subscription-service:
     build: ./backend/subscription-service
     ports:
       - "5003:5003"
-    depends_on:
-      - mongodb
-    restart: always
+    env_file:
+      - ./backend/subscription-service/.env
 
   payment-service:
     build: ./backend/payment-service
     ports:
-      - "5004:5004"
-    restart: always
+      - "5006:5006"
+    env_file:
+      - ./backend/payment-service/.env
 
   ai-service:
     build: ./backend/ai-service
     ports:
       - "5005:5005"
-    restart: always
+    env_file:
+      - ./backend/ai-service/.env
 
   frontend:
     build: ./frontend
@@ -61,4 +58,3 @@ services:
       - "5173:5173"
     depends_on:
       - api-gateway
-    restart: always

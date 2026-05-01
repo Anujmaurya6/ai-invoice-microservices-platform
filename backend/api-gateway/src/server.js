@@ -1,43 +1,59 @@
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
+
 app.use(cors());
-app.use(express.json());
 
-// USER
+// 🔍 DEBUG
+app.use((req, res, next) => {
+  console.log("👉 Incoming:", req.method, req.url);
+  next();
+});
+
+// 🔥 USERS SERVICE
 app.use("/api/users", createProxyMiddleware({
-  target: "http://user-service:5001",
-  changeOrigin: true
+  target: "http://localhost:5001",
+  changeOrigin: true,
+  pathRewrite: { "^/api/users": "" }
 }));
 
-// INVOICE
+// 🔥 INVOICE SERVICE
 app.use("/api/invoices", createProxyMiddleware({
-  target: "http://invoice-service:5002",
-  changeOrigin: true
+  target: "http://localhost:5002",
+  changeOrigin: true,
+  pathRewrite: { "^/api/invoices": "" }
 }));
 
-// SUBSCRIPTION
+// 🔥 SUBSCRIPTION SERVICE
 app.use("/api/subscription", createProxyMiddleware({
-  target: "http://subscription-service:5003",
-  changeOrigin: true
+  target: "http://localhost:5003",
+  changeOrigin: true,
+  pathRewrite: { "^/api/subscription": "" }
 }));
 
-// PAYMENT
+// 🔥 PAYMENT SERVICE
 app.use("/api/payment", createProxyMiddleware({
-  target: "http://payment-service:5004",
-  changeOrigin: true
+  target: "http://localhost:5007",
+  changeOrigin: true,
+  pathRewrite: { "^/api/payment": "" }
 }));
 
-// AI
+// 🔥 AI SERVICE
 app.use("/api/ai", createProxyMiddleware({
-  target: "http://ai-service:5005",
-  changeOrigin: true
+  target: "http://localhost:5005",
+  changeOrigin: true,
+  pathRewrite: { "^/api/ai": "" }
 }));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🌐 API Gateway running on ${PORT}`);
+// HEALTH
+app.get("/", (req, res) => {
+  res.send("🚀 Gateway running...");
+});
+
+app.listen(5000, () => {
+  console.log("🔥 Gateway running on 5000");
 });

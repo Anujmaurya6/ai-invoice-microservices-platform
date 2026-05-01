@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/subscription", require("./routes/subRoutes"));
+app.use("/", require("./routes/subscriptionRoutes"));
 
 // DB
 const MONGO_URI =
