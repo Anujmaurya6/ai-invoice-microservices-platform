@@ -3,7 +3,7 @@ const Subscription = require("../models/Subscription");
 // 🔍 CHECK SUBSCRIPTION
 exports.checkSubscription = async (req, res) => {
   try {
-    const { userId } = req.query;
+    const userId = req.user.id;
 
     const sub = await Subscription.findOne({ userId });
 
@@ -29,7 +29,7 @@ exports.checkSubscription = async (req, res) => {
 // 🔵 UPGRADE SUBSCRIPTION
 exports.upgradeSubscription = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const userId = req.user.id;
 
     let sub = await Subscription.findOne({ userId });
 

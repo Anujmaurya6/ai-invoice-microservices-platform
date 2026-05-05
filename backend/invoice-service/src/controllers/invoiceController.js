@@ -4,8 +4,10 @@ const Invoice = require("../models/Invoice");
 exports.createInvoice = async (req, res) => {
   try {
     const { amount, description } = req.body;
+    const userId = req.user.id; // From Auth Middleware
 
     const invoice = await Invoice.create({
+      userId,
       amount,
       description
     });
@@ -17,10 +19,11 @@ exports.createInvoice = async (req, res) => {
   }
 };
 
-// 🔵 GET ALL INVOICES
+// 🔵 GET ALL INVOICES (FILTERED BY USER)
 exports.getInvoices = async (req, res) => {
   try {
-    const invoices = await Invoice.find();
+    const userId = req.user.id;
+    const invoices = await Invoice.find({ userId });
     res.json(invoices);
 
   } catch (err) {

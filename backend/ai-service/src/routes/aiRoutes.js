@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const axios = require("axios");
+const auth = require("../middleware/auth");
 
-router.post("/generate", async (req, res) => {
+router.post("/generate", auth, async (req, res) => {
   try {
     const { text } = req.body;
 

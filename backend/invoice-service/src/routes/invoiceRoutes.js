@@ -1,10 +1,11 @@
-const router=require("express").Router();
+const router = require("express").Router();
 const {
     createInvoice,
     getInvoices
-}=require("../controllers/invoiceController");
+} = require("../controllers/invoiceController");
+const auth = require("../middleware/auth");
 
-router.post("/create",createInvoice);
-router.get("/",getInvoices);
+router.post("/create", auth, createInvoice);
+router.get("/", auth, getInvoices);
 
-module.exports=router;
+module.exports = router;

@@ -1,3 +1,5 @@
+version: "3"
+
 services:
 
   api-gateway:
@@ -58,3 +60,21 @@ services:
       - "5173:5173"
     depends_on:
       - api-gateway
+
+  # 🔥 PROMETHEUS
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - invoice-service
+
+  # 🔥 GRAFANA
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus

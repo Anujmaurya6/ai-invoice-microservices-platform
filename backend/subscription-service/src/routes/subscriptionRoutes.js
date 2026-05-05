@@ -4,10 +4,12 @@ const {
   upgradeSubscription
 } = require("../controllers/subController");
 
+const auth = require("../middleware/auth");
+
 // 🔍 check
-router.get("/check", checkSubscription);
+router.get("/check", auth, checkSubscription);
 
 // 💳 upgrade
-router.post("/upgrade", upgradeSubscription);
+router.post("/upgrade", auth, upgradeSubscription);
 
 module.exports = router;

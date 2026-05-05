@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use("/", require("./routes/paymentRoutes"));
 
-const PORT = process.env.PORT || 5007;
+const PORT = process.env.PORT || 5006;
 
 app.listen(PORT, () => {
   console.log(`🟠 Payment Service running on ${PORT}`);

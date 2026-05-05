@@ -16,35 +16,35 @@ app.use((req, res, next) => {
 
 // 🔥 USERS SERVICE
 app.use("/api/users", createProxyMiddleware({
-  target: "http://localhost:5001",
+  target: process.env.USER || "http://localhost:5001",
   changeOrigin: true,
   pathRewrite: { "^/api/users": "" }
 }));
 
 // 🔥 INVOICE SERVICE
 app.use("/api/invoices", createProxyMiddleware({
-  target: "http://localhost:5002",
+  target: process.env.INVOICE || "http://localhost:5002",
   changeOrigin: true,
   pathRewrite: { "^/api/invoices": "" }
 }));
 
 // 🔥 SUBSCRIPTION SERVICE
 app.use("/api/subscription", createProxyMiddleware({
-  target: "http://localhost:5003",
+  target: process.env.SUB || "http://localhost:5003",
   changeOrigin: true,
   pathRewrite: { "^/api/subscription": "" }
 }));
 
 // 🔥 PAYMENT SERVICE
 app.use("/api/payment", createProxyMiddleware({
-  target: "http://localhost:5007",
+  target: process.env.PAYMENT || "http://localhost:5006",
   changeOrigin: true,
   pathRewrite: { "^/api/payment": "" }
 }));
 
 // 🔥 AI SERVICE
 app.use("/api/ai", createProxyMiddleware({
-  target: "http://localhost:5005",
+  target: process.env.AI || "http://localhost:5005",
   changeOrigin: true,
   pathRewrite: { "^/api/ai": "" }
 }));
